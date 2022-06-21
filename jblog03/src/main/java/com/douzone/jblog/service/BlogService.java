@@ -30,15 +30,6 @@ public class BlogService {
 		return BlogVo;
 	}
 
-	public Map<String, Object> getCategoryList(String id) {
-		Map<String, Object> map = new HashMap<>();
-		List<BlogVo> list = null;
-		list = blogRepository.findCategory(id);
-		map.put("list", list);
-
-		return map;
-	}
-
 	public Boolean update(BlogVo vo) {
 		return blogRepository.update(vo);
 	}
