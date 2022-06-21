@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="post">
+	<select id="view" parameterType="postvo" resultType="postvo">
+		<![CDATA[
+			select title as postTitle, contents 
+			from post 
+			where no = ${no}
+		]]>
+	</select>
+
+	<select id="getpostlist" parameterType="long" resultType="postvo">
+		<choose>
+		    <when test="categoryNo==0 and postNo==0 "> 
+				<![CDATA[
+					select title as postTitle, contents, category_no as categoryNo, no 
+					from post 
+					order by no desc 
+					limit 1   
+				]]>
+		    </when>
+		    <when test="postNo==0">
+	            <![CDATA[
+					select title as postTitle, contents, category_no as categoryNo, no
+					from post 
+					where category_no=#{categoryNo } 
+					order by no desc 
+					limit 1
+	            ]]>
+         	</when>
+		    <otherwise>
+				<![CDATA[ 
+					select title as postTitle, contents, category_no as categoryNo, no 
+					from post 
+					where category_no = #{categoryNo}
+					order by no desc
+				]]>
+			</otherwise>
+		</choose>
+	</select>
+
+	<select id="write" parameterType="postvo">
+		<![CDATA[ 
+			insert into post 
+			values(null, #{postTitle}, #{contents}, #{categoryNo}) 
+		]]>
+	</select>
+</mapper>
