@@ -43,7 +43,7 @@
 	<select id="write" parameterType="postvo">
 		<![CDATA[ 
 			insert into post 
-			values(null, #{postTitle}, #{contents}, #{categoryNo}) 
+			values(null, #{postTitle}, #{contents}, #{categoryNo})
 		]]>
 	</select>
 </mapper>

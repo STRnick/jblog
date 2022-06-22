@@ -29,9 +29,9 @@
 	
 	<select id="findList" parameterType="string" resultType="categoryvo">
 		<![CDATA[
-			select name as categoryName, no, blog_id as blogId, description 
-			from category 
-			where blog_id=#{id} 
+			select c.name as categoryName, c.no, c.blog_id as blogId, c.description 
+			from category c, blog b
+			where blog_id=#{id} and c.blog_id = b.id
 			order by no
 		]]>
 	</select>

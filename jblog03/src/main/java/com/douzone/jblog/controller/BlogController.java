@@ -1,6 +1,8 @@
 package com.douzone.jblog.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.ServletContext;
@@ -103,7 +105,7 @@ public class BlogController {
    }
 	
 	@Auth
-	@RequestMapping(value="/admin/update", method = RequestMethod.POST)
+	@RequestMapping(value="/admin/update", method=RequestMethod.POST)
 	public String mainUpdate(
 			@RequestParam(value="file") MultipartFile multipartFile,
 			@PathVariable("id") String id,
@@ -127,7 +129,7 @@ public class BlogController {
 	   }
 	
 	@Auth
-	@RequestMapping(value="/category/delete/{no}",method=RequestMethod.GET)
+	@RequestMapping(value="/category/delete/{no}", method=RequestMethod.GET)
 	public String category(
 			@PathVariable(value = "no") Long categoryNo, 
 			@AuthUser UserVo uservo) {
@@ -135,4 +137,23 @@ public class BlogController {
 		return "redirect:/"+ uservo.getId() + "/admin/category";
 	}
 	
+	@Auth
+	@RequestMapping("/admin/write")
+	   public String adminWrite(
+			   @PathVariable("id") String id, 
+			   Model model) {
+		
+		List<CategoryVo> list = categoryService.findList(id);
+		model.addAttribute("list", list);
+		
+	      return "blog/admin/write";
+	   }
+	
+	@Auth
+	@RequestMapping(value="/admin/write",method=RequestMethod.POST)
+	public String write(@AuthUser UserVo uservo, PostVo postvo, CategoryVo categoryvo) {
+		postService.write(postvo);
+		
+		return "redirect:/"+ uservo.getId();
+	}
 }
