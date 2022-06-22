@@ -27,7 +27,7 @@
 			      				<input type="text" size="60" name="postTitle">
 				      			<select name="category">
 				      				<c:forEach items="${list}" var = "vo" varStatus = "status">
-				      					<option value="${vo.no}">${vo.categoryName}</option>
+				      					<option>${vo.categoryName}</option>
 				      				</c:forEach>
 				      			</select>
 				      		</td>

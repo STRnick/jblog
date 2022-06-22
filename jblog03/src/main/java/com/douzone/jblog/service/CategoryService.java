@@ -30,4 +30,8 @@ public class CategoryService {
 	public List<CategoryVo> findList(String id) {
 		return categoryRepository.findList(id);
 	}
+	
+	public CategoryVo getCategoryNo(String categoryName, String blogId) {
+		return categoryRepository.findNobyName(categoryName, blogId);
+	}
 }

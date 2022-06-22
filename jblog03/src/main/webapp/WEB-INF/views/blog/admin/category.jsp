@@ -31,13 +31,13 @@
 					<tr>
 						<td>${status.count}</td>
 						<td>${vo.categoryName }</td>
-						<td><%-- ${vo.count } --%></td>
+						<td>${vo.categoryCount }</td>
 						<td>${vo.description }</td>
 						<td>
-						<%-- <c:if test="${vo.count eq 0}"> --%>
-						<a href="${pageContext.request.contextPath}/${authUser.id}/category/delete/${vo.no}">
-						<img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a>
-						<%-- </c:if> --%>
+						<c:if test="${vo.categoryCount eq 0}">
+							<a href="${pageContext.request.contextPath}/${authUser.id}/category/delete/${vo.no}">
+							<img src="${pageContext.request.contextPath}/assets/images/delete.jpg"></a>
+						</c:if>
 						</td>
 					</tr>	
 					</c:forEach>				  

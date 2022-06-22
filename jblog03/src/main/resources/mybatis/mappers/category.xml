@@ -7,7 +7,7 @@
 		<![CDATA[ 
 			insert 
 			into category 
-			values(null, '미분류', '기본 카테고리', #{id}) 
+			values(null, '미분류', '기본 카테고리', #{id}, 0) 
 		]]>
 	</select>
 	
@@ -15,7 +15,7 @@
 		<![CDATA[
 			insert 
 			into category 
-			values(null, #{categoryName}, #{description}, #{blogId})
+			values(null, #{categoryName}, #{description}, #{blogId}, 0)
 		]]>
 	</select>
 	
@@ -29,10 +29,27 @@
 	
 	<select id="findList" parameterType="string" resultType="categoryvo">
 		<![CDATA[
-			select c.name as categoryName, c.no, c.blog_id as blogId, c.description 
-			from category c, blog b
-			where blog_id=#{id} and c.blog_id = b.id
-			order by no
+			select a.no, 
+				   a.name as categoryName, 
+				   a.blog_id as blogId, 
+				   a.description, 
+				   ifnull(b.categoryNum, 0) as categoryCount 
+			from category a 
+			left join (select category_no, 
+							  count(category_no) as categoryNum 
+					   from post
+					   group by category_no) b
+					   on a.no = b.category_no 
+			where a.blog_id = #{id }
+		]]>
+	</select>
+	
+	<select id="selectNo" parameterType="map" resultType="categoryvo">
+		<![CDATA[
+			select no 
+			from category 
+			where name = #{categoryName } 
+			and blog_id = #{blogId }
 		]]>
 	</select>
 </mapper>
