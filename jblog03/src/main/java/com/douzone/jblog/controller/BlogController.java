@@ -49,7 +49,8 @@ public class BlogController {
 	public String index(
 		@PathVariable("id") String id,
 		@PathVariable("pathNo1") Optional<Long> pathNo1,
-		@PathVariable("pathNo2") Optional<Long> pathNo2, Model model) {
+		@PathVariable("pathNo2") Optional<Long> pathNo2, 
+		PostVo postVo, Model model) {
 		
 		Long categoryNo = 0L;
 		Long postNo = 0L;
@@ -63,13 +64,15 @@ public class BlogController {
 		
 		BlogVo blogvo = blogService.Select(id);
 		List<CategoryVo> catlist = categoryService.findList(id);
-		List<PostVo> postlist = postService.getPostList(categoryNo);
-	    PostVo postVo = postService.view(postNo);
+		postVo = postService.getPostContents(id, categoryNo, postNo);
+		List<PostVo> postlist = postService.getPostList(categoryNo, id);
+		postVo = postService.view(postNo);
 		
 		model.addAttribute("blogvo", blogvo);
 		model.addAttribute("catlist", catlist);
+		model.addAttribute("postInfo", postVo);
 		model.addAttribute("postlist", postlist);
-		model.addAttribute("postVo", postVo);
+		
 		
 		System.out.println(model);
 				

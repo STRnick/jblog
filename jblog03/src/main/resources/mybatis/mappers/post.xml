@@ -9,6 +9,37 @@
 			where no = ${no}
 		]]>
 	</select>
+	
+	<select id="findPostContents" parameterType="map" resultType="postvo">
+		<choose>
+		    <when test="categoryNo==0 and postNo==0 "> 
+				<![CDATA[
+					select p.no, p.title as postTitle, p.contents, p.category_no as categoryNo 
+					from post p, category c 
+					where p.category_no = c.no and c.blog_id = #{id } 
+					order by no desc 
+					limit 1
+				]]>
+		    </when>
+		    <when test="postNo==0">
+	            <![CDATA[
+		            select p.no, p.title as postTitle, p.contents, p.category_no as categoryNo 
+		            from post p, category c 
+		            where p.category_no = #{categoryNo } and p.category_no = c.no and c.blog_id = #{id } 
+		            order by no desc 
+		            limit 1
+	            ]]>
+         	</when>
+		    <otherwise>
+				<![CDATA[
+					select p.no, p.title as postTitle, p.contents, p.category_no as categoryNo 
+					from post p, category c 
+					where p.category_no = #{categoryNo } and p.no = #{no } and p.category_no = c.no and c.blog_id = #{id } 
+					order by no desc
+				]]>
+			</otherwise>
+		</choose>
+	</select>
 
 	<select id="getpostlist" parameterType="long" resultType="postvo">
 		<choose>

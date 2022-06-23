@@ -22,8 +22,12 @@ public class PostService {
 		return postRepository.write(vo);
 	}
 
-	public List<PostVo> getPostList(Long categoryNo){
-		return postRepository.getPostList(categoryNo);
+	public List<PostVo> getPostList(Long categoryNo, String id){
+		return postRepository.getPostList(categoryNo, id);
+	}
+
+	public PostVo getPostContents(String id, Long categoryNo, Long postNo) {
+		return postRepository.findPostContents(id,categoryNo,postNo);
 	}
 
 }

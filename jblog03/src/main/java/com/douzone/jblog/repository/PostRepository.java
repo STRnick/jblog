@@ -1,6 +1,8 @@
 package com.douzone.jblog.repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +26,21 @@ public class PostRepository {
 		return sqlSession.update("post.write", vo) == 1;
 	}
 
-	public List<PostVo> getPostList(Long categoryNo){
-		return sqlSession.selectList("post.getpostlist", categoryNo);
+	public List<PostVo> getPostList(Long categoryNo, String id){
+		Map<String,Object> map = new HashMap<>();
+		map.put("categoryNo", categoryNo);
+		map.put("id", id);
+		
+		return sqlSession.selectList("post.getpostlist", map);
 	}
 
+	public PostVo findPostContents(String id, Long categoryNo, Long postNo) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("categoryNo", categoryNo);
+		map.put("postNo", postNo);
+		
+		
+		return sqlSession.selectOne("post.findPostContents", map);
+	}
 }

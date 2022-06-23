@@ -15,9 +15,9 @@
 		<div id="wrapper">
 			<div id="content">
 				<div class="blog-content">
-					<h4>${postVo.postTitle }</h4>
+					<h4>${postInfo.postTitle }</h4>
 					<p>
-					${postVo.contents }
+					${postInfo.contents }
 					<p>
 				</div>
 				<ul class="blog-list">
